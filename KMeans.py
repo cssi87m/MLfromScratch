@@ -39,6 +39,8 @@ class KMeans:
         
         else: 
             self.distance = Distance().Minkowski
+        
+        self.centers = None
     
     def init_centers(self, X): 
         # randomly pick k rows of X as initial centers
@@ -75,7 +77,14 @@ class KMeans:
             centers.append(new_centers)
             it += 1
         
+        self.centers = centers
         if return_iter: 
             return (centers, labels, it)
         else: 
             return centers, labels
+    
+    def predict(self, ins): 
+        try: 
+            return self.assign_labels(ins, self.centers)
+        except ValueError: 
+            print("Have to declare centers first")
